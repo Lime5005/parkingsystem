@@ -26,12 +26,10 @@ public class FareCalculatorService {
 
         Duration duration = Duration.between(inTime, outTime);
         // minutes between from and to
-        System.out.println(duration.toMinutes() + " minutes");
-        double durationHour = duration.toMinutes() / 60f;
+        double durationHour = duration.toMinutes() / 60f; // d = double, f = float
         System.out.println("durationHour = " + durationHour);
 
         //TODO: Some tests are failing here. Need to check if this logic is correct
-//        int durationOld = outHour - inHour;
         if (durationHour <= 0.5) {
             ticket.setPrice(0.0);
         } else {
@@ -44,7 +42,7 @@ public class FareCalculatorService {
                     ticket.setPrice(durationHour * Fare.BIKE_RATE_PER_HOUR);
                     break;
                 }
-                default: throw new IllegalArgumentException("Unkown Parking Type");
+                default: throw new IllegalArgumentException("Unknown Parking Type");
             }
         }
 
