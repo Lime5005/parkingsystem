@@ -16,17 +16,17 @@ public class FareCalculatorService {
         LocalDateTime inTime;
         inTime = ticket.getInTime().toInstant()
                 .atZone(ZoneId.systemDefault()).toLocalDateTime();
-        System.out.println("inTime = " + inTime);
+//        System.out.println("inTime = " + inTime);
 
         LocalDateTime outTime;
         outTime = ticket.getOutTime().toInstant()
                 .atZone(ZoneId.systemDefault()).toLocalDateTime();
-        System.out.println("outTime = " + outTime);
+//        System.out.println("outTime = " + outTime);
 
         Duration duration = Duration.between(inTime, outTime);
         // minutes between from and to
         double durationHour = duration.toMinutes() / 60f; // d = double, f = float
-        System.out.println("durationHour = " + durationHour);
+//        System.out.println("durationHour = " + durationHour);
 
         //TODO: Some tests are failing here. Need to check if this logic is correct
         if (durationHour <= 0.5) {
