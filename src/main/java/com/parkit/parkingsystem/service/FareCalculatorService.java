@@ -9,11 +9,10 @@ import java.time.ZoneId;
 
 public class FareCalculatorService {
 
-    public void calculateFare(Ticket ticket){
+    public void calculateFare(Ticket ticket, boolean recurringClient){
         if( (ticket.getOutTime() == null) || (ticket.getOutTime().before(ticket.getInTime())) ){
             throw new IllegalArgumentException("Out inTime provided is incorrect:"+ticket.getOutTime().toString());
         }
-
         LocalDateTime inTime;
         inTime = ticket.getInTime().toInstant()
                 .atZone(ZoneId.systemDefault()).toLocalDateTime();
@@ -35,16 +34,23 @@ public class FareCalculatorService {
         } else {
             switch (ticket.getParkingSpot().getParkingType()){
                 case CAR: {
-                    ticket.setPrice(durationHour * Fare.CAR_RATE_PER_HOUR);
+                    if (recurringClient) {
+                        ticket.setPrice((durationHour * Fare.CAR_RATE_PER_HOUR) * 0.95);
+                    } else {
+                        ticket.setPrice(durationHour * Fare.CAR_RATE_PER_HOUR);
+                    }
                     break;
                 }
                 case BIKE: {
-                    ticket.setPrice(durationHour * Fare.BIKE_RATE_PER_HOUR);
+                    if (recurringClient) {
+                        ticket.setPrice((durationHour * Fare.BIKE_RATE_PER_HOUR) * 0.95);
+                    } else {
+                        ticket.setPrice(durationHour * Fare.BIKE_RATE_PER_HOUR);
+                    }
                     break;
                 }
                 default: throw new IllegalArgumentException("Unknown Parking Type");
             }
         }
-
     }
 }
