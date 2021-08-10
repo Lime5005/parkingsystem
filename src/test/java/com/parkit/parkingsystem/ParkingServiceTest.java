@@ -7,7 +7,6 @@ import com.parkit.parkingsystem.model.ParkingSpot;
 import com.parkit.parkingsystem.model.Ticket;
 import com.parkit.parkingsystem.service.ParkingService;
 import com.parkit.parkingsystem.util.InputReaderUtil;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -30,8 +29,32 @@ public class ParkingServiceTest {
     @Mock
     private static TicketDAO ticketDAO;
 
-    @BeforeEach
-    private void setUpPerTest() {
+//    @BeforeEach
+    private void initForIncoming() {
+        when(inputReaderUtil.readSelection()).thenReturn(1);
+        try {
+            when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("car000");
+            ParkingSpot parkingSpot = new ParkingSpot(2, ParkingType.CAR, true);
+            when(parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR)).thenReturn(2);
+            when(ticketDAO.getTicket("car000")).thenReturn(null);
+            Ticket initTicket = new Ticket();
+            initTicket.setId(8);
+            initTicket.setPrice(0);
+            initTicket.setInTime(new Date());
+            initTicket.setOutTime(null);
+            initTicket.setVehicleRegNumber("car000");
+            initTicket.setParkingSpot(parkingSpot);
+
+            when(parkingSpotDAO.updateParking(parkingSpot)).thenReturn(true);
+            when(ticketDAO.saveTicket(any(Ticket.class))).thenReturn(true);
+            parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+//    @BeforeEach
+    private void initForExiting() {
         try {
             when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
 
@@ -42,7 +65,6 @@ public class ParkingServiceTest {
             ticket.setVehicleRegNumber("ABCDEF");
             when(ticketDAO.getTicket(anyString())).thenReturn(ticket);
             when(ticketDAO.updateTicket(any(Ticket.class))).thenReturn(true);
-
             when(parkingSpotDAO.updateParking(any(ParkingSpot.class))).thenReturn(true);
 
             parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
@@ -53,7 +75,15 @@ public class ParkingServiceTest {
     }
 
     @Test
+    public void processIncomingVehicleTest() {
+        initForIncoming();
+        parkingService.processIncomingVehicle();
+        verify(ticketDAO, Mockito.times(1)).saveTicket(any(Ticket.class));
+    }
+
+    @Test
     public void processExitingVehicleTest(){
+        initForExiting();
         parkingService.processExitingVehicle();
         verify(parkingSpotDAO, Mockito.times(1)).updateParking(any(ParkingSpot.class));
     }

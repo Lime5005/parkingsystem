@@ -3,3 +3,4 @@ parking-system.iml
 target/
 DataBaseConfig.java
 DataBaseTestConfig.java
+.DS_Store
