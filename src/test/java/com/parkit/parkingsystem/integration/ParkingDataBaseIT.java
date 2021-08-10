@@ -70,7 +70,7 @@ public class ParkingDataBaseIT {
         //TODO: check that the fare generated and out time are populated correctly in the database
         Ticket newTicket = ticketDAO.getTicket("car111");
         assertNotNull(newTicket);
-        assertNotNull(newTicket.getOutTime());
+        assertNotNull(newTicket.getOutTime());// Must run AFTER processExitingVehicleTest() has been run.
         assertNotNull(newTicket.getPrice());
 
         assertEquals(1, parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR));
