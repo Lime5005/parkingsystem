@@ -10,6 +10,10 @@ public class InputReaderUtil {
     private static final Scanner scan = new Scanner(System.in, "UTF-8");
     private static final Logger logger = LogManager.getLogger("InputReaderUtil");
 
+    /**
+     * This method will read the input integer the user has entered.
+     * @return the integer input, if any error, return -1.
+     */
     public int readSelection() {
         try {
             int input = Integer.parseInt(scan.nextLine());
@@ -21,6 +25,11 @@ public class InputReaderUtil {
         }
     }
 
+    /**
+     * This method will read the vehicle number that the user has entered.
+     * @return the input vehicle number, if any error, just throw.
+     * @throws Exception
+     */
     public String readVehicleRegistrationNumber() throws Exception {
         try {
             String vehicleRegNumber= scan.nextLine();

@@ -10,6 +10,10 @@ public class InteractiveShell {
 
     private static final Logger logger = LogManager.getLogger("InteractiveShell");
 
+    /**
+     * This method will load the interface for a user as long as the option is not 3
+     * and call the methods for incoming or exiting parking service according to the options.
+     */
     public static void loadInterface(){
         logger.info("App initialized!!!");
         System.out.println("Welcome to Parking System!");
@@ -42,6 +46,9 @@ public class InteractiveShell {
         }
     }
 
+    /**
+     * This method is for showing the menu if the loadInterface() needed.
+     */
     private static void loadMenu(){
         System.out.println("Please select an option. Simply enter the number to choose an action");
         System.out.println("1 New Vehicle Entering - Allocate Parking Space");

@@ -15,19 +15,30 @@ public class ParkingService {
 
     private static final Logger logger = LogManager.getLogger("ParkingService");
 
-    private static FareCalculatorService fareCalculatorService = new FareCalculatorService();
+    private static final FareCalculatorService fareCalculatorService = new FareCalculatorService();
 
-    private InputReaderUtil inputReaderUtil;
-    private ParkingSpotDAO parkingSpotDAO;
-    private  TicketDAO ticketDAO;
+    private final InputReaderUtil inputReaderUtil;
+    private final ParkingSpotDAO parkingSpotDAO;
+    private final TicketDAO ticketDAO;
     private boolean recurringClient = false;
 
+    /**
+     * This construct method will set all the params with it for later usage.
+     * @param inputReaderUtil an instance of InputReaderUtil.
+     * @param parkingSpotDAO an instance of ParkingSpotDAO.
+     * @param ticketDAO an instance of TicketDAO.
+     */
     public ParkingService(InputReaderUtil inputReaderUtil, ParkingSpotDAO parkingSpotDAO, TicketDAO ticketDAO){
         this.inputReaderUtil = inputReaderUtil;
         this.parkingSpotDAO = parkingSpotDAO;
         this.ticketDAO = ticketDAO;
     }
 
+    /**
+     * This method will check if there is an available parking spot, verify if a client is
+     * recurring client, and set the parking spot, save a ticket with in/out time, price, vehicle number
+     * in the database.
+     */
     public void processIncomingVehicle() {
         try{
             ParkingSpot parkingSpot = getNextParkingNumberIfAvailable();
@@ -102,6 +113,10 @@ public class ParkingService {
         }
     }
 
+    /**
+     * This method will record the out time, set the parking spot, and update the ticket
+     * with new fare when a vehicle is exiting the parking.
+     */
     public void processExitingVehicle() {
         try{
             String vehicleRegNumber = getVehichleRegNumber();

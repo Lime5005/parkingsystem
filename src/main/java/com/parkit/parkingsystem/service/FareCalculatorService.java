@@ -9,6 +9,13 @@ import java.time.ZoneId;
 
 public class FareCalculatorService {
 
+    /**
+     * This method calculate the parking fare by durationHour for CAR and BIKE respectively.
+     * If the durationHour is less or equal than 30 minutes, then the parking is free.
+     * If the client is already in our database record, then the client will get -5% discount.
+     * @param ticket a ticket with inTime and outTime record.
+     * @param recurringClient a client whose vehicle number that can be found in our database.
+     */
     public void calculateFare(Ticket ticket, boolean recurringClient){
         if( (ticket.getOutTime() == null) || (ticket.getOutTime().before(ticket.getInTime())) ){
             throw new IllegalArgumentException("Out inTime provided is incorrect:"+ticket.getOutTime().toString());

@@ -10,6 +10,11 @@ public class DataBaseConfig {
 
     private static final Logger logger = LogManager.getLogger("DataBaseConfig");
 
+    /**
+     * This method will get a connection with correct url, username and password.
+     * @return a database connection instance.
+     * @throws Exception
+     */
     public Connection getConnection() throws Exception {
         logger.info("Create DB connection");
         Class.forName("com.mysql.cj.jdbc.Driver");
