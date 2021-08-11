@@ -53,6 +53,13 @@ public class ParkingServiceTest {
         }
     }
 
+    @Test
+    public void processIncomingVehicleTest() {
+        initForIncoming();
+        parkingService.processIncomingVehicle();
+        verify(ticketDAO, Mockito.times(1)).saveTicket(any(Ticket.class));
+    }
+
 //    @BeforeEach
     private void initForExiting() {
         try {
@@ -72,13 +79,6 @@ public class ParkingServiceTest {
             e.printStackTrace();
             throw  new RuntimeException("Failed to set up test mock objects");
         }
-    }
-
-    @Test
-    public void processIncomingVehicleTest() {
-        initForIncoming();
-        parkingService.processIncomingVehicle();
-        verify(ticketDAO, Mockito.times(1)).saveTicket(any(Ticket.class));
     }
 
     @Test
