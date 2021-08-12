@@ -16,9 +16,9 @@ public class FareCalculatorService {
      * @param ticket a ticket with inTime and outTime record.
      * @param recurringClient a client whose vehicle number that can be found in our database.
      */
-    public void calculateFare(Ticket ticket, boolean recurringClient){
-        if( (ticket.getOutTime() == null) || (ticket.getOutTime().before(ticket.getInTime())) ){
-            throw new IllegalArgumentException("Out inTime provided is incorrect:"+ticket.getOutTime().toString());
+    public void calculateFare(Ticket ticket, boolean recurringClient) {
+        if ((ticket.getOutTime() == null) || (ticket.getOutTime().before(ticket.getInTime()))) {
+            throw new IllegalArgumentException("Out inTime provided is incorrect:" + ticket.getOutTime().toString());
         }
         LocalDateTime inTime;
         inTime = ticket.getInTime().toInstant()
@@ -39,7 +39,7 @@ public class FareCalculatorService {
         if (durationHour <= 0.5) {
             ticket.setPrice(0.0);
         } else {
-            switch (ticket.getParkingSpot().getParkingType()){
+            switch (ticket.getParkingSpot().getParkingType()) {
                 case CAR: {
                     if (recurringClient) {
                         ticket.setPrice((durationHour * Fare.CAR_RATE_PER_HOUR) * 0.95);

@@ -14,7 +14,7 @@ public class InteractiveShell {
      * This method will load the interface for a user as long as the option is not 3
      * and call the methods for incoming or exiting parking service according to the options.
      */
-    public static void loadInterface(){
+    public static void loadInterface() {
         logger.info("App initialized!!!");
         System.out.println("Welcome to Parking System!");
 
@@ -24,10 +24,10 @@ public class InteractiveShell {
         TicketDAO ticketDAO = new TicketDAO();
         ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
 
-        while(continueApp){
+        while (continueApp) {
             loadMenu();
             int option = inputReaderUtil.readSelection();
-            switch(option){
+            switch (option) {
                 case 1: {
                     parkingService.processIncomingVehicle();
                     break;
@@ -49,7 +49,7 @@ public class InteractiveShell {
     /**
      * This method is for showing the menu if the loadInterface() needed.
      */
-    private static void loadMenu(){
+    private static void loadMenu() {
         System.out.println("Please select an option. Simply enter the number to choose an action");
         System.out.println("1 New Vehicle Entering - Allocate Parking Space");
         System.out.println("2 Vehicle Exiting - Generate Ticket Price");
