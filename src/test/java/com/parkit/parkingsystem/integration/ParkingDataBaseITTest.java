@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class ParkingDataBaseIT {
+public class ParkingDataBaseITTest {
 
     private static DataBaseTestConfig dataBaseTestConfig = new DataBaseTestConfig();
     private static ParkingSpotDAO parkingSpotDAO;
@@ -48,7 +48,7 @@ public class ParkingDataBaseIT {
 
     @AfterAll
     private static void tearDown(){
-        dataBasePrepareService.clearDataBaseEntries();
+//        dataBasePrepareService.clearDataBaseEntries();
     }
 
     @Test
@@ -63,11 +63,12 @@ public class ParkingDataBaseIT {
     }
 
     @Test
-    public void testParkingLotExit(){
+    public void testParkingLotExit() throws InterruptedException {
         testParkingACar();
         ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
         parkingService.processExitingVehicle();
         //TODO: check that the fare generated and out time are populated correctly in the database
+        Thread.sleep(500);
         Ticket newTicket = ticketDAO.getTicket("car111");
         assertNotNull(newTicket);
         assertNotNull(newTicket.getOutTime());// Test individually, must clean the database with "car111" before run.

@@ -19,7 +19,7 @@ public class DataBaseTestConfig extends DataBaseConfig {
         String username = configFile.getProperty("username");
         String password = configFile.getProperty("password");
         return DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/test",username,password);
+                "jdbc:mysql://localhost:3306/test?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",username,password);
     }
 
     public void closeConnection(Connection con){
